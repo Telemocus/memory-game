@@ -46,9 +46,17 @@ function createBoard() {
      for (let i = 0; i < cards.length; i++) {
           const card = document.createElement('img');
           card.setAttribute('src','assets/blank.png');
+          card.addEventListener('click', flipCard)   //I can use mouseover 
           card.setAttribute('data-id',i);
+
           gridDisplay.appendChild(card)
      }
 }
 
 createBoard();
+
+function flipCard() {
+    const cardId = this.getAttribute('data-id')
+     console.log("clicked",cardId);
+
+}
