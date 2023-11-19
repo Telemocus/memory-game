@@ -36,11 +36,12 @@ const cards = [
       img:"assets/pizza.png" ,
     }
 ]
-
 cards.sort(()=> 0.5 - Math.random());
 
-
 const gridDisplay = document.querySelector("#grid");
+const cardsChosen = [];
+const cardsChosenId = [];
+const carsWon = [];
 
 function createBoard() {
      for (let i = 0; i < cards.length; i++) {
@@ -52,11 +53,26 @@ function createBoard() {
           gridDisplay.appendChild(card)
      }
 }
-
 createBoard();
 
-function flipCard() {
-    const cardId = this.getAttribute('data-id')
-     console.log("clicked",cardId);
+function checkMatch() {
+    const  cardx = document.querySelectorAll('img');
 
+     if (cardsChosen[0] == cardsChosen[1]) {
+          alert('MATCH');
+          cardx[cardsChosenId[0]].setAttribute('src','assets/white.png');
+          cardx[cardsChosenId[1]].setAttribute('src','assets/white.png');
+          cardx[cardsChosenId[0]].removeEventListener('click', flipCard);
+          cardx[cardsChosenId[1]].removeEventListener('click', flipCard);
+          cardsWon.push(cardsChosen);
+     }
+}
+function flipCard() {
+     const cardId = this.getAttribute('data-id')
+     cardsChosen.push(cards[cardId].name)
+     cardsChosenId.push(cardId)
+     this.setAttribute('src',cards[cardId].img)
+     if (cardsChosen.length === 2) {
+          setTimeout( checkMatch,500)
+     }
 }
